@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DetailController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +17,21 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [HomeController::class, 'home']);
+// INDEX
+Route::get('/', [ProductController::class, 'index']);
+
+// DETAILS
+Route::get('/product/{id}', [DetailController::class, 'index']);
 
 
+// LOGIN
 Route::get('/login', function () {
     return view('login', ['name' => 'Application']);
 });
-
 Route::post('/login', [UserController::class, 'login']);
+
+// LOGOUT
+Route::get('/logout', function() {
+    Session::forget('user');
+    return redirect('/');
+});
